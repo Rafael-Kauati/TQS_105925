@@ -18,7 +18,7 @@ public class StackTest {
 
     @BeforeEach
     void setup() {
-        stack = new TqsStack<>();
+        stack = new TqsStack<>(); boundstack = new TqsStack<>(1);
     }
 
     @DisplayName("\n=========== Size test :  ===========\n")
@@ -32,13 +32,12 @@ public class StackTest {
     @DisplayName("\n=========== Size after n pushes test :  ===========\n")
     @Test
     public void sizeAfterNPushes() {
-        System.out.println("\n=========== Size after n pushes test :  ===========\n");
 
         stack.push(1);
         stack.push(2);
         stack.push(3);
-
-        Assertions.assertFalse(stack.size() > 0, "Stack size after n pushes test: failed | ");
+        //System.out.println("\n\n ||| Actuall size: "+ stack.size());
+        Assertions.assertTrue(stack.size() > 0, "Stack size after n pushes test: failed | ");
 
     }
 
@@ -65,7 +64,7 @@ public class StackTest {
         Assertions.assertAll(
                 "If one pushes x then peeks, the value returned is x, but the size stays the same",
                 (Executable) () -> assertEquals(stack.peek(), 2),
-                (Executable) () -> assertEquals(stack.size(), 1)
+                (Executable) () -> assertEquals(stack.size(), 2)
         );
 
 
@@ -102,6 +101,7 @@ public class StackTest {
         Assertions.assertThrows(NoSuchElementException.class, () -> stack.peek(), "A 'NoSuchElementException' exception was expected ");
     }
 
+    @DisplayName("\n=========== Bound stack peek test :  ===========\n")
     @Test
     void BoundStack() {
         boundstack.push(1);

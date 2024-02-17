@@ -3,39 +3,44 @@ package org.example;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 
 public class TqsStack <T>{
 
-    private List<T> linkedList ;
+    private LinkedList<T> ll ;
 
-    private int boundery = -1;
+    private  int boundery = -1;
 
     public TqsStack(){
-        linkedList = new LinkedList<>();
+        ll = new LinkedList<>();
     }
     public TqsStack(int bound) {
-        this.linkedList = new LinkedList<>();
+        this.ll = new LinkedList<>();
         this.boundery = bound;
     }
 
     public T pop(){
-        return null;
+        if (this.ll.isEmpty())throw  new NoSuchElementException();
+        return this.ll.pop();
     }
 
     public void push(T t){
-
+        if (boundery > 0 && boundery == this.ll.size()) throw new IllegalStateException();
+        this.ll.push(t);
     }
 
     public T peek(){
-        return null;
+        if (this.ll.isEmpty()) throw new NoSuchElementException();
+        return this.ll.peek();
     }
 
     public int size(){
-        return 1;
+        return this.ll.size();
     }
 
     public boolean isEmpty(){
-        return  true;
+        return this.ll.isEmpty() ;
     }
 
 }
