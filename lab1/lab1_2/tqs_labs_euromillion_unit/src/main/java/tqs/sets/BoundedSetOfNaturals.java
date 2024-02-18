@@ -59,6 +59,10 @@ public class BoundedSetOfNaturals implements Iterable<Integer> {
     }
 
 
+    public boolean isEmpty() {
+        return this.size() == 0;
+    }
+
     public int size() {
         return this.collection.size();
     }
