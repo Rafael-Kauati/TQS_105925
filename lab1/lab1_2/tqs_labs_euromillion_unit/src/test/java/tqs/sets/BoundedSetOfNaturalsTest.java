@@ -66,6 +66,7 @@ class BoundedSetOfNaturalsTest {
 
     }
 
+
     /*
     * From : Rafael Kauati
     *  simple tests for 2c
@@ -80,6 +81,17 @@ class BoundedSetOfNaturalsTest {
         assertFalse(setB.isEmpty());
     }
 
+
+    @DisplayName("\n === Test fromArray method === \n")
+    @Test
+    public void testFromArrayMethod(){
+        int[] set1 = new int[]{10, 20, 30};
+        final BoundedSetOfNaturals newSet = BoundedSetOfNaturals.fromArray(set1);
+        assertEquals(3, newSet.size(), "Error : the new set generated from the 'fromArray' method should have the same lengh of the 'set1' local variable");
+
+
+        assertTrue(newSet.contains(30),"Error : the new set generated from the 'fromArray' method should contains the value 30" );
+    }
 
 
 }
