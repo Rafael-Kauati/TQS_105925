@@ -11,8 +11,11 @@ import org.apache.http.client.utils.URIBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
 import java.util.Formatter;
 import java.util.Locale;
@@ -35,9 +38,11 @@ public class AddressResolverService {
     }
 
 
+
     public Optional<Address> findAddressForLocation(double latitude, double longitude) throws URISyntaxException, IOException, ParseException, org.json.simple.parser.ParseException {
 
         String endpointUri = prepareUriForRemoteEndpoint(latitude, longitude);
+        Logger.getLogger(this.getClass().getName()).log(Level.INFO, endpointUri);
 
         String response = httpClient.doHttpGet(endpointUri);
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, response);
@@ -45,16 +50,18 @@ public class AddressResolverService {
         // get parts from response till reaching the address
         JSONObject obj = (JSONObject) new JSONParser().parse(response);
 
-        System.out.println("\n\n=== obj = "+obj.toString());
+
         obj = (JSONObject) ((JSONArray) obj.get("results")).get(0);
         if (((JSONArray) obj.get("locations")).isEmpty()) {
             return Optional.empty();
         } else {
             JSONObject address = (JSONObject) ((JSONArray) obj.get("locations")).get(0);
+
             String road = (String) address.get("street");
             String city = (String) address.get("adminArea5");
+            String state = (String) address.get("adminArea3");
             String zip = (String) address.get("postalCode");
-            return Optional.of(new Address(road, city, zip, ""));
+            return Optional.of(new Address(road, city, state, zip));
         }
     }
 

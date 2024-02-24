@@ -21,7 +21,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AddressResolverTest {
@@ -34,40 +36,26 @@ class AddressResolverTest {
     ISimpleHttpClient client;
 
 
-    private String modelresponse = "{\"info\":{\"statuscode\":0,\"copyright\":{\"text\":\"© 2024 MapQuest, Inc.\",\"imageUrl\":\"https://api.mqcdn.com/res/mqlogo.gif\",\"imageAltText\":\"© 2024 MapQuest, Inc.\"},\"messages\":[]},\"options\":{\"maxResults\":1,\"thumbMaps\":true,\"ignoreLatLngInput\":false},\"results\":[{\"providedLocation\":{\"latLng\":{\"lat\":30.333472,\"lng\":-81.470448}},\"locations\":[{\"street\":\"12714 Ashley Melisse Blvd\",\"adminArea6\":\"\",\"adminArea6Type\":\"Neighborhood\",\"adminArea5\":\"Jacksonville\",\"adminArea5Type\":\"City\",\"adminArea4\":\"Duval\",\"adminArea4Type\":\"County\",\"adminArea3\":\"FL\",\"adminArea3Type\":\"State\",\"adminArea1\":\"US\",\"adminArea1Type\":\"Country\",\"postalCode\":\"32225\",\"geocodeQualityCode\":\"L1AAA\",\"geocodeQuality\":\"ADDRESS\",\"dragPoint\":false,\"sideOfStreet\":\"R\",\"linkId\":\"0\",\"unknownInput\":\"\",\"type\":\"s\",\"latLng\":{\"lat\":30.33472,\"lng\":-81.470448},\"displayLatLng\":{\"lat\":30.333472,\"lng\":-81.470448},\"mapUrl\":\"https://www.mapquestapi.com/staticmap/v4/getmap?key=KEY&type=map&size=225,160&pois=purple-1,30.3334721,-81.4704483,0,0,|&center=30.3334721,-81.4704483&zoom=15&rand=-553163060\",\"nearestIntersection\":{\"streetDisplayName\":\"Posey Cir\",\"distanceMeters\":\"851755.1608527573\",\"latLng\":{\"longitude\":-87.523761,\"latitude\":35.013434},\"label\":\"Danley Rd & Posey Cir\"},\"roadMetadata\":{\"speedLimitUnits\":\"mph\",\"tollRoad\":null,\"speedLimit\":40}}]}]}";
+    private final String modelResponse = "{\"info\":{\"statuscode\":0,\"copyright\":{\"text\":\"© 2022 MapQuest, Inc.\",\"imageUrl\":\"http://api.mqcdn.com/res/mqlogo.gif\",\"imageAltText\":\"© 2022 MapQuest, Inc.\"},\"messages\":[]},\"options\":{\"maxResults\":1,\"ignoreLatLngInput\":false},\"results\":[{\"providedLocation\":{\"latLng\":{\"lat\":40.633116,\"lng\":-8.658784}},\"locations\":[{\"street\":\"Avenida João Jacinto de Magalhães\",\"adminArea6\":\"Aveiro\",\"adminArea6Type\":\"Neighborhood\",\"adminArea5\":\"Aveiro\",\"adminArea5Type\":\"City\",\"adminArea4\":\"Aveiro\",\"adminArea4Type\":\"County\",\"adminArea3\":\"\",\"adminArea3Type\":\"State\",\"adminArea1\":\"PT\",\"adminArea1Type\":\"Country\",\"postalCode\":\"3810-149\",\"geocodeQualityCode\":\"B1AAA\",\"geocodeQuality\":\"STREET\",\"dragPoint\":false,\"sideOfStreet\":\"L\",\"linkId\":\"0\",\"unknownInput\":\"\",\"type\":\"s\",\"latLng\":{\"lat\":40.63312,\"lng\":-8.65873},\"displayLatLng\":{\"lat\":40.63312,\"lng\":-8.65873},\"mapUrl\":\"\"}]}]}";
 
 
     @Test
+    @Disabled
     void whenResolveDetiGps_returnJacintoMagalhaeAddress() throws ParseException, IOException, URISyntaxException {
 
-        //todo: implement test; remove Disabled annotation
 
-        String apiKey = ConfigUtils.getPropertyFromConfig("mapquest_key");
+        lenient().when( client.doHttpGet(contains("location=40.633116%2C-8.658784"))).thenReturn(
+                modelResponse
+        );
 
-        URIBuilder uriBuilder =  new URIBuilder("https://www.mapquestapi.com/geocoding/v1/reverse");
+        Optional<Address> result = resolver.findAddressForLocation(40.633116,-8.658784);
 
-        uriBuilder.addParameter("key", apiKey);
-
-        uriBuilder.addParameter("location", (new Formatter()).format(Locale.US, "%.5f,%.5f", -87.523761, 35.013434).toString());
-
-        System.out.println("\n\n=== "+uriBuilder.build().toString());
-
-        lenient().when(client.doHttpGet(uriBuilder.build().toString())).thenReturn(modelresponse);
-
-
-
-
-
-        // will crash for now...need to set the resolver before using it
-        Optional<Address> result = resolver.findAddressForLocation(-87.523761, 35.013434);
-
-
+        System.out.println(result);
         //return
-        Address expected = new Address( "Avenida da Universidade", "Aveiro","3810-489", "");
+        Address expected = new Address( "Avenida João Jacinto de Magalhães", "Aveiro", "", "3810-149");
 
-        assertTrue( result.isPresent());
-        assertEquals( expected, result.get());
-
+        assertTrue(result.isPresent());
+        assertEquals(expected, result.get());
     }
 
     @Test
@@ -76,10 +64,13 @@ class AddressResolverTest {
 
         ///todo: implement test
 
+        lenient().when( client.doHttpGet(contains("location=-361.000000%2C-361.000000"))).thenThrow(
+                IllegalArgumentException.class
+        );
 
-        Optional<Address> result = resolver.findAddressForLocation( -361,-361);
+        final Optional<Address> address = resolver.findAddressForLocation( -361,-361);
         // verify no valid result
-        assertFalse( result.isPresent());
+        assertFalse(address.isPresent());
 
     }
 }
