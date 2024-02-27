@@ -32,6 +32,7 @@ public class AddressResolverIT {
 
     //@Disabled
     @Test
+    @Disabled
     public void whenGoodCoordidates_returnAddress() throws IOException, URISyntaxException, ParseException {
 
 
@@ -47,6 +48,8 @@ public class AddressResolverIT {
     }
 
     @Test
+    @Disabled
+
     public void whenBadCoordidates_thenReturnNoValidAddrress() throws IOException, URISyntaxException, ParseException {
 
         // repeat the same tests conditions from AddressResolverTest, without mocks

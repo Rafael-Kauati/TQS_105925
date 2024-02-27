@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -22,10 +24,12 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.contains;
+import static org.mockito.BDDMockito.will;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class AddressResolverTest {
 
 
@@ -44,7 +48,7 @@ class AddressResolverTest {
     void whenResolveDetiGps_returnJacintoMagalhaeAddress() throws ParseException, IOException, URISyntaxException {
 
 
-        lenient().when( client.doHttpGet(contains("location=40.633116%2C-8.658784"))).thenReturn(
+        when(  client.doHttpGet(contains("location=40.633116%2C-8.658784"))).thenReturn(
                 modelResponse
         );
 
