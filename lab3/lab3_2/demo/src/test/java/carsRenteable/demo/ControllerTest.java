@@ -38,12 +38,11 @@ public class ControllerTest
     @Autowired
     private MockMvc MockController;
 
-    final Car c1 = new Car("Subaru", "Impreza WRX"), c2  = new Car("Skoda", "Super B");
+    final Car c1 = new Car(1L, "Subaru", "Impreza WRX"), c2  = new Car(2L,"Skoda", "Super B");
 
     @Test
     void whenRequestForCarIdExist_thenReturnTheCarDetails() throws Exception
     {
-        // Mock the behavior of the service
         when(service.getCarDetails(anyLong())).thenReturn(Optional.of(c1));
 
         // Perform the GET request using MockMvc
