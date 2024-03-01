@@ -57,7 +57,7 @@ public class ControllerTest
     @Test
     void whenGetCars_thenReturnAllCars() throws  Exception
     {
-        final Car c1 = new Car("Subaru", "Impreza WRX"), c2  = new Car("Skoda", "Super B");
+        final Car c1 = new Car(1L,"Subaru", "Impreza WRX"), c2  = new Car(2L,"Skoda", "Super B");
 
         when(service.getAll()).thenReturn(Arrays.asList(c1,c2));
 
