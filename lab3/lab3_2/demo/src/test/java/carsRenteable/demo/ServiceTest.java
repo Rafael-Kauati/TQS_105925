@@ -39,7 +39,7 @@ public class ServiceTest
 
 
     @Test
-    void whenGivenValidCarId_theReturnIt()
+    void whenGivenValidCarId_thenReturnIt()
     {
         Car c = service.getCarDetails(2L).orElse(null);
 
