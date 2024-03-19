@@ -1,7 +1,6 @@
 package book;
 
 import io.cucumber.java.ParameterType;
-import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -12,13 +11,11 @@ import org.example.Library;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BookSearchSteps
@@ -41,10 +38,12 @@ public class BookSearchSteps
     }
 
     @Given("a book with the title {string}, written by {string}, published in {iso8601Date}")
-    public void aBookWithTheTitleTheLawsOfPowerWrittenByRobertGreenePublishedIn(String arg0, String arg1, Date arg2) {
-        final Book book = new Book(arg0, arg1, arg2);
+    public void aBookWithTheTitleTheLawsOfPowerWrittenByRobertGreenePublishedIn(String arg0, String arg1, LocalDate arg2) {
+        //System.out.println("\n\n || "+arg0+" || "+arg1+" || "+ arg2+"\n\n");
+        final Book book = new Book(arg0, arg1, arg2.atStartOfDay());
         library.addBook(book);
     }
+
 
     @When("the customer searches for books published between {int} and {int}")
     public void theCustomerSearchesForBooksPublishedBetweenAnd(int arg0, int arg1) {
@@ -52,10 +51,15 @@ public class BookSearchSteps
         LocalDateTime dt2 = LocalDateTime.of(arg1,1,1,0,0);
         Date date1 = Date.from(dt.toInstant(ZoneOffset.UTC));
         Date date2 = Date.from(dt2.toInstant(ZoneOffset.UTC));
-        result = library.findBooks(date1, date2);
+        //System.out.println("\n\n || books found : "+library.findBooks(date1,date2));
+        this.result = library.findBooks(date1, date2);
     }
+
     @Then("{int} books should have been found")
-    public void verifyResultSize(int num) {
-        assertEquals(result.size(), num);
+    public void booksShouldHaveBeenFound(int arg0) {
+        //System.out.println("\n\n || "+result.size()+" || "+arg0+"\n\n");
+
+        assertEquals( arg0, result.size());
     }
+
 }
