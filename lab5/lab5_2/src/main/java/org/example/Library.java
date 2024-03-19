@@ -1,10 +1,6 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Library {
@@ -22,5 +18,10 @@ public class Library {
         System.out.println(store.stream().filter(book -> from.before(book.getPublished()) &&
                 end.getTime().after(book.getPublished())).sorted(Comparator.comparing(Book::getPublished).reversed()).collect(Collectors.toList()));
         return store.stream().filter(book -> from.before(book.getPublished()) && end.getTime().after(book.getPublished())).sorted(Comparator.comparing(Book::getPublished).reversed()).collect(Collectors.toList());
+    }
+
+
+    public List<Book> findBooksByTitle(String title) {
+        return store.stream().filter( book -> {return Objects.equals(title, book.getTitle());}).sorted(Comparator.comparing(Book::getTitle).reversed()).collect(Collectors.toList());
     }
 }
