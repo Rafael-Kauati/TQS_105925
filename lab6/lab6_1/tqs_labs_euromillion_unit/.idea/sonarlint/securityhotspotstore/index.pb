@@ -1,0 +1,32 @@
+
+7
+pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+d
+4src/test/java/tqs/sets/BoundedSetOfNaturalsTest.java,6/4/64e756a0a087d02060ad664c924a8bdafc3470a7
+B
+boostrap-sonarQube,b/2/b2979ed9f13d3c3d112df76b1e401dc965daf22b
+:
+
+Dockerfile,6/6/6651ddff6eb82c840ced7c1dddee15c6e1913dd4
+[
++src/test/java/tqs/euromillions/DipTest.java,e/5/e5d8a6a5acef1040ad954de879457c145dae248f
+`
+0src/main/java/tqs/sets/BoundedSetOfNaturals.java,a/2/a2764c125f2de8ec0c7808d42f86b40b28dfd606
+>
+docker-compose,2/a/2a298b027cf545ca9eb7cc48f69f8306436eae2a
+B
+docker-compose.yml,3/5/35b8c13cf2eb2a194eada000eb310d65aed53b2a
+O
+src/main/java/tqs/DemoMain.java,2/9/29c3adc8e81545f2aa2f52cf76bc6d342a6b837e
+e
+5src/main/java/tqs/euromillions/CuponEuromillions.java,5/3/539540d8fe5e79793996e8b9325a1b03849e2679
+d
+4src/main/java/tqs/euromillions/EuromillionsDraw.java,8/0/8045a08f1d2627f3eba9f02b1fe942db5856e094
+W
+'src/main/java/tqs/euromillions/Dip.java,1/0/100f39b4a24c289e328fc3211a7711bcd42aec20
+h
+8src/test/java/tqs/euromillions/EuromillionsDrawTest.java,a/c/ac6a409bc06db7d625d24485a057661ccfd1bcdb
+E
+euromillions-play.iml,e/4/e4be83e9752f5b236cf473701de5150d98276610
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
