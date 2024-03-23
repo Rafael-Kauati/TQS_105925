@@ -13,7 +13,7 @@ public class TravelModel
 {
     private final String fromCity, toCity;
     private final double price;
-    private LocalDateTime departure;
+    private final LocalDateTime departure;
     private final int numSeats;
 
 }

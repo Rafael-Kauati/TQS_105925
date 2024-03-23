@@ -4,7 +4,8 @@ import deti.traveler.entity.Model.TravelModel;
 import deti.traveler.entity.Travel;
 import deti.traveler.service.TravelService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/travel")
+@RequestMapping
 @RequiredArgsConstructor
 public class TravelController
 {
@@ -21,8 +22,9 @@ public class TravelController
     private final TravelService service;
 
     @GetMapping("/cities")
-    public List<Travel> getTravelsBetweenCities(@RequestBody TravelModel model)
+    public ResponseEntity<List<Travel>> getTravelsBetweenCities(@RequestBody TravelModel model)
     {
-        return service.getTravel(model.getFromCity(), model.getToCity(), model.getDeparture(), model.getNumSeats());
+        final List<Travel> result = service.getTravel(model.getFromCity(), model.getToCity(), model.getDeparture(), model.getNumSeats());
+        return  !result.isEmpty() ? new ResponseEntity<List<Travel>>(result, HttpStatus.NOT_FOUND) : new ResponseEntity<List<Travel>>(result, HttpStatus.FOUND);
     }
 }

@@ -15,12 +15,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Travel
+public class Travel implements TravelInterface
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
 
     private String fromCity, toCity;
 
@@ -29,5 +28,6 @@ public class Travel
     private int numSeats;
 
     private Double price;
+
 
 }
