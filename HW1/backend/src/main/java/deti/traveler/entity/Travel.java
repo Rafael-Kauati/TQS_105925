@@ -1,6 +1,7 @@
 package deti.traveler.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,20 +14,20 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Travel
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("id")
     private Long id;
 
 
     private String fromCity, toCity;
 
-    @JsonProperty("id")
     private LocalDateTime departure, arrive;
 
-    @JsonProperty("price")
+    private int numSeats;
+
     private Double price;
 
 }
