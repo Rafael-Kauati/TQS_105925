@@ -41,15 +41,7 @@ class ControllerTest
 
     @Test
     void TestSearchByGivenCities() throws Exception {
-        final List<Travel> trips = new ArrayList<>();
-        trips.add(DummyTravel);
 
-        when(service.getTravel(
-                eq(DummyTravel.getFromCity()),
-                eq(DummyTravel.getToCity()),
-                any(LocalDateTime.class),
-                eq(DummyTravel.getNumSeats())
-        )).thenReturn(trips);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         String travelModelJson = objectMapper.writeValueAsString(new TravelModel(DummyTravel.getFromCity(), DummyTravel.getToCity(), DummyTravel.getPrice(), DummyTravel.getDeparture(), DummyTravel.getNumSeats()));
@@ -66,7 +58,15 @@ class ControllerTest
 
     @BeforeEach
     void setupTest() {
+        final List<Travel> trips = new ArrayList<>();
+        trips.add(DummyTravel);
 
+        when(service.getTravel(
+                eq(DummyTravel.getFromCity()),
+                eq(DummyTravel.getToCity()),
+                any(LocalDateTime.class),
+                eq(DummyTravel.getNumSeats())
+        )).thenReturn(trips);
     }
 
 }

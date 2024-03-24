@@ -22,9 +22,8 @@ public class TravelController
     private final TravelService service;
 
     @GetMapping("/cities")
-    public ResponseEntity<List<Travel>> getTravelsBetweenCities(@RequestBody TravelModel model)
-    {
+    public ResponseEntity<List<Travel>> getTravelsBetweenCities(@RequestBody TravelModel model) {
         final List<Travel> result = service.getTravel(model.getFromCity(), model.getToCity(), model.getDeparture(), model.getNumSeats());
-        return  !result.isEmpty() ? new ResponseEntity<List<Travel>>(result, HttpStatus.NOT_FOUND) : new ResponseEntity<List<Travel>>(result, HttpStatus.FOUND);
+        return !result.isEmpty() ? new ResponseEntity<>(result, HttpStatus.FOUND) : new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
     }
 }
