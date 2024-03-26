@@ -14,10 +14,10 @@ import java.util.Map;
 @Service
 public class ApiCurrency
 {
-    final  String
+    final String
      CMD = "curl "
     ,BASEURL = "https://api.freecurrencyapi.com/v1/latest?apikey="
-    ,KEY = "fca_live_KBICg2n01U0bCk763zVWrJBGQfahtwxNRpOYfanQ"
+    ,KEY = "fca_live_KBICg2n01U0bCk763zVWrJBGQfahtwxNRpOYfanQ&currencies=EUR%2CUSD%2CJPY%2CGBP"
     ,OUTPUT = " > currency.txt";
 
     @Getter
