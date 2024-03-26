@@ -33,7 +33,7 @@ class ServiceTest
     private TravelService travelService;
     String fromCity = "CityA";
     String toCity = "CityB";
-    LocalDateTime departure = LocalDateTime.of(2024, 3, 25, 10, 0); // Sample departure time
+    LocalDateTime departure = LocalDateTime.of(2024, 3, 25, 10, 0);
     int numSeats = 2;
 
 
@@ -53,7 +53,7 @@ class ServiceTest
     void testGetTravel_Failure() {
         String fromCity2 = "CityX";
         String toCity2 = "CityY";
-        LocalDateTime departureTime2 = LocalDateTime.of(2024, 3, 25, 10, 0); // Sample departure time
+        LocalDateTime departureTime2 = LocalDateTime.of(2024, 3, 25, 10, 0);
         int numberOfSeats2 = 2;
 
         when(travelRepository.findByFromCityAndToCityAndDepartureAndNumSeatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats))
