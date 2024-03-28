@@ -14,14 +14,16 @@ import java.util.Map;
 @Service
 public class ApiCurrency
 {
-    final String
+    final  String
      CMD = "curl "
     ,BASEURL = "https://api.freecurrencyapi.com/v1/latest?apikey="
     ,KEY = "fca_live_KBICg2n01U0bCk763zVWrJBGQfahtwxNRpOYfanQ&currencies=EUR%2CUSD%2CJPY%2CGBP"
     ,OUTPUT = " > currency.txt";
 
     @Getter
-    private Map<String, Double> currencyMap = new HashMap<>();
+    private  Map<String, Double> currencyMap = new HashMap<>();
+
+
 
     public  void Fetch_and_Store_Currency() throws IOException, InterruptedException {
         final String fullCommand = CMD + "\"" + BASEURL + KEY + "\"" + OUTPUT;
@@ -60,5 +62,7 @@ public class ApiCurrency
             currencyMap.put(currency, value);
         }
     }
+
+
 
 }
