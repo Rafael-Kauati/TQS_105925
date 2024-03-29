@@ -15,7 +15,7 @@ public class CurrencyConverter
 
     private Map<String, Double> currencyValues;
 
-    public  double convert(CURRENCY currencyOpt, double toBeConverted)
+    public double convert(CURRENCY currencyOpt, double toBeConverted)
     {
         System.out.println("/nChoosen currency : "+currencyOpt.toString());
         final double ExchangeRate = currencyValues.get(currencyOpt.toString());

@@ -2,9 +2,11 @@ package deti.traveler.cache;
 
 import deti.traveler.service.utils.CURRENCY;
 import deti.traveler.service.utils.CurrencyConverter;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Service
 public class TTLCurrencyCache {
     private final int TTL = 5; // seconds
 

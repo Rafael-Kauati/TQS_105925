@@ -16,10 +16,6 @@ public class CurrencyCacheTest
 {
     private TTLCurrencyCache cache;
 
-
-
-
-
     @Test
     public void testCacheExpired() throws IOException, InterruptedException {
         Thread.sleep(6000);
@@ -27,7 +23,6 @@ public class CurrencyCacheTest
     }
 
     @Test
-    //@Disabled
     public void testCacheUpdate() throws IOException, InterruptedException {
         Thread.sleep(6000);
         cache.convertValue(CURRENCY.USD, 200);
@@ -40,7 +35,5 @@ public class CurrencyCacheTest
     {
         this.cache = new TTLCurrencyCache(new CurrencyConverter());
     }
-
-
 
 }
