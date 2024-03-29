@@ -28,8 +28,8 @@ public class TravelController
     }
 
     @GetMapping("/purchase")
-    public ResponseEntity<Ticket> purchaseTravel(@PathVariable Long id, String owner)
+    public ResponseEntity<Ticket> purchaseTravel(@PathVariable Long id, String owner, int numSeatsBooked)
     {
-        return new ResponseEntity<>(TicketService.purchaseTicket(id, owner), HttpStatus.CREATED);
+        return new ResponseEntity<>(TicketService.purchaseTicket(id, owner,  numSeatsBooked), HttpStatus.CREATED);
     }
 }

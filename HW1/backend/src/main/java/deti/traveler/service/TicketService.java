@@ -21,7 +21,7 @@ public class TicketService
     private TravelRepository travelRepository;
     private TTLCurrencyCache currencyCache;
 
-    public Ticket purchaseTicket(final Long id, String owner)
+    public Ticket purchaseTicket(final Long id, String owner, int numSeatsBooked)
     {
         final Optional<Travel> travel = travelRepository.findById(id);
         final Ticket ticket = new Ticket().builder()
@@ -31,7 +31,7 @@ public class TicketService
                 .build();
 
         ticketRepository.save(ticket);
-        travelRepository.updateTraveSeatslById(id, travel.get().getNumSeats());
+        travelRepository.updateTraveSeatslById(id, numSeatsBooked);
         return ticket;
     }
 }
