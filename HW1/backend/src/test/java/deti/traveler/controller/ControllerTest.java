@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import deti.traveler.entity.Model.TravelModel;
 import deti.traveler.entity.Travel;
 import deti.traveler.service.TravelService;
+import deti.traveler.service.utils.CURRENCY;
 import org.assertj.core.internal.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +60,7 @@ class ControllerTest
 
 
     @BeforeEach
-    void setupTest() {
+    void setupTest() throws IOException, InterruptedException {
         final List<Travel> trips = new ArrayList<>();
         trips.add(DummyTravel);
 
@@ -65,7 +68,8 @@ class ControllerTest
                 eq(DummyTravel.getFromCity()),
                 eq(DummyTravel.getToCity()),
                 any(LocalDateTime.class),
-                eq(DummyTravel.getNumSeats())
+                eq(DummyTravel.getNumSeats()),
+                CURRENCY.EUR
         )).thenReturn(trips);
     }
 

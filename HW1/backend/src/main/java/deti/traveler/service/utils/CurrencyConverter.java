@@ -1,7 +1,6 @@
 package deti.traveler.service.utils;
 
 import deti.traveler.service.ApiCurrency;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -10,8 +9,7 @@ import java.util.Map;
 @Service
 public class CurrencyConverter
 {
-    @Autowired
-    private  ApiCurrency currency;
+    private final ApiCurrency currency;
 
     private Map<String, Double> currencyValues;
 

@@ -2,6 +2,7 @@ package deti.traveler.service;
 
 import deti.traveler.entity.Travel;
 import deti.traveler.repository.TravelRepository;
+import deti.traveler.service.utils.CURRENCY;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,8 +43,8 @@ class ServiceTest
 
 
     @Test
-    void testGetTravel() {
-        List<Travel> result = travelService.getTravel(fromCity, toCity, departure, numSeats);
+    void testGetTravel() throws IOException, InterruptedException {
+        List<Travel> result = travelService.getTravel(fromCity, toCity, departure, numSeats, CURRENCY.EUR);
 
         verify(travelRepository).findByFromCityAndToCityAndDepartureAndNumSeatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats);
 
@@ -50,7 +52,7 @@ class ServiceTest
     }
 
     @Test
-    void testGetTravel_Failure() {
+    void testGetTravel_Failure() throws IOException, InterruptedException {
         String fromCity2 = "CityX";
         String toCity2 = "CityY";
         LocalDateTime departureTime2 = LocalDateTime.of(2024, 3, 25, 10, 0);
@@ -59,7 +61,7 @@ class ServiceTest
         when(travelRepository.findByFromCityAndToCityAndDepartureAndNumSeatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats))
                 .thenThrow(new RuntimeException("Database connection failed"));
 
-        List<Travel> result = travelService.getTravel(fromCity2, toCity2, departureTime2, numberOfSeats2);
+        List<Travel> result = travelService.getTravel(fromCity2, toCity2, departureTime2, numberOfSeats2, CURRENCY.EUR);
 
         verify(travelRepository).findByFromCityAndToCityAndDepartureAndNumSeatsIsGreaterThanEqual(fromCity2, toCity2, departureTime2, numberOfSeats2);
 
