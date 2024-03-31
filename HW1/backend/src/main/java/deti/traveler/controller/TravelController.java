@@ -6,7 +6,9 @@ import deti.traveler.entity.Travel;
 import deti.traveler.service.TicketService;
 import deti.traveler.service.TravelService;
 import deti.traveler.service.utils.CURRENCY;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +18,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping
-@RequiredArgsConstructor
-public class TravelController
-{
+public class TravelController {
+    @Autowired
+    private  TravelService travelService;
 
-    private final TravelService TravelService;
-    private final TicketService TicketService;
-
-    @GetMapping("/cities")
-    public ResponseEntity<List<Travel>> getTravelsBetweenCities(@RequestBody TravelModel model, CURRENCY currency) throws IOException, InterruptedException {
-        final List<Travel> result = TravelService.getTravel(model.getFromCity(), model.getToCity(), model.getDeparture(), model.getNumSeats(), currency);
+    @GetMapping("/cities/{currency}")
+    public ResponseEntity<List<Travel>> getTravelsBetweenCities(@RequestBody TravelModel model,@PathVariable CURRENCY currency) throws IOException, InterruptedException {
+        final List<Travel> result = travelService.getTravel(model.getFromCity(), model.getToCity(), model.getDeparture(), model.getNumSeats(), currency);
         return !result.isEmpty() ? new ResponseEntity<>(result, HttpStatus.FOUND) : new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/purchase")
-    public ResponseEntity<Ticket> purchaseTravel(@PathVariable Long id, String owner, int numSeatsBooked)
-    {
-        return new ResponseEntity<>(TicketService.purchaseTicket(id, owner,  numSeatsBooked), HttpStatus.CREATED);
+    @GetMapping("/purchase/{id}") // Corrected path variable declaration
+    public ResponseEntity<Ticket> purchaseTravel(@PathVariable Long id, String owner, int numSeatsBooked) {
+        return new ResponseEntity<>(travelService.purchaseTicket(id, owner, numSeatsBooked), HttpStatus.CREATED);
     }
 }

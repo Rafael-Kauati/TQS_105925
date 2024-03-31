@@ -26,7 +26,7 @@ class TicketServiceTest {
     private TravelRepository travelRepository;
 
     @InjectMocks
-    private TicketService ticketService;
+    private TravelService ticketService;
 
     @Test
     void testPurchaseTicket() {

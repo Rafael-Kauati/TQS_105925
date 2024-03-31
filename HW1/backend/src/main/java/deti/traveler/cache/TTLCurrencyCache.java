@@ -10,14 +10,14 @@ import java.io.IOException;
 @Slf4j
 @Service
 public class TTLCurrencyCache {
-    private final int TTL = 40; // seconds
+    private final int TTL = 5000;
 
     private CurrencyConverter converter;
     private long lastUpdateTime;
 
     public TTLCurrencyCache(CurrencyConverter converter) {
         this.converter = converter;
-        this.lastUpdateTime = System.currentTimeMillis() / 1000;
+        this.lastUpdateTime = System.currentTimeMillis() ;
     }
 
     public double convertValue(CURRENCY currency, double valueToBeConverted) throws IOException, InterruptedException {
@@ -29,13 +29,13 @@ public class TTLCurrencyCache {
     }
 
     public boolean isCacheExpired() {
-        long currentTime = System.currentTimeMillis() / 1000;
+        long currentTime = System.currentTimeMillis();
         return currentTime >= lastUpdateTime + TTL;
     }
 
     private void updateCache() throws IOException, InterruptedException {
         log.warn("\nUpdating cache");
         converter.updateCacheCurrency();
-        lastUpdateTime = System.currentTimeMillis() / 1000;
+        lastUpdateTime = System.currentTimeMillis() ;
     }
 }

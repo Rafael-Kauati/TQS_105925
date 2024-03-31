@@ -8,10 +8,15 @@ import deti.traveler.service.utils.CURRENCY;
 import org.assertj.core.internal.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.eq;
@@ -27,10 +32,12 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-@WebMvcTest(TravelController.class)
+//@WebMvcTest(controllers = TravelController.class)
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@RunWith(SpringRunner.class)
 class ControllerTest
 {
     @Autowired
@@ -49,7 +56,7 @@ class ControllerTest
         objectMapper.registerModule(new JavaTimeModule());
         String travelModelJson = objectMapper.writeValueAsString(new TravelModel(DummyTravel.getFromCity(), DummyTravel.getToCity(), DummyTravel.getPrice(), DummyTravel.getDeparture(), DummyTravel.getNumSeats()));
 
-        mockController.perform(get("/cities")
+        mockController.perform(get("/cities/EUR")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(travelModelJson)
                 )
@@ -69,7 +76,7 @@ class ControllerTest
                 eq(DummyTravel.getToCity()),
                 any(LocalDateTime.class),
                 eq(DummyTravel.getNumSeats()),
-                CURRENCY.EUR
+                eq(CURRENCY.EUR)
         )).thenReturn(trips);
     }
 

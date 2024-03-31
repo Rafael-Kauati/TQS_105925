@@ -1,31 +1,39 @@
 package deti.traveler.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Travel implements TravelInterface
+@Table(name = "Travel")
+@Getter
+@Setter
+public class Travel
 {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private String fromCity, toCity;
+    @Column
+    private String fromCity;
 
-    private LocalDateTime departure, arrive;
+    @Column
+    private String toCity;
+
+    @Column
+    private LocalDateTime departure;
+
+    @Column
+    private LocalDateTime arrive;
+
+    @Column
 
     private int numSeats;
+    @Column
 
     private Double price;
 
