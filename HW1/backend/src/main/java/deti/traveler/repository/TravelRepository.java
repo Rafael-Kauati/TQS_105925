@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface TravelRepository extends JpaRepository<Travel, Long>
 {
-    public List<Travel> findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(String fromCity, String toCity, LocalDateTime departure, int numSeats);
+    List<Travel> findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(String fromCity, String toCity, LocalDateTime departure, int numSeats);
 
 }

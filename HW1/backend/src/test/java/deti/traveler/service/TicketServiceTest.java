@@ -53,8 +53,8 @@ class TicketServiceTest {
 
         // Verify that save method is called on ticketRepository
         verify(ticketRepository, times(1)).save(purchasedTicket);
-        optionalTravel.get().setNumseats(
-                optionalTravel.get().getNumseats() - 1
+        optionalTravel.get().bookSeats(
+                 1
         );
         // Verify that updateTravelSeatsById method is called on travelRepository
         verify(travelRepository, times(1)).save(optionalTravel.get());

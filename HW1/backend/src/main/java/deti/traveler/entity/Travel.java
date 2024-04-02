@@ -35,4 +35,13 @@ public class Travel {
     @Column(name = "price")
     private Double price;
 
+
+
+    public void bookSeats(final int numSeatsBooked)
+    {
+        setNumseats(
+                getNumseats() - numSeatsBooked
+        );
+    }
+
 }

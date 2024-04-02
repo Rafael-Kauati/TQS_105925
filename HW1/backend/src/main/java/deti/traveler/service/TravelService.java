@@ -30,6 +30,14 @@ public class TravelService
 
     private TTLCurrencyCache converter = null;
 
+    public void addTravel(final Travel t) throws IOException, InterruptedException {
+        travelRepository.save(t);
+        getTravel(t.getFromcity(), t.getTocity()
+        , t.getDeparture(), t.getNumseats(), CURRENCY.EUR);
+
+    }
+
+
     public List<Travel> getTravel(final String from, final String to, final LocalDateTime departure, final int numSeats, CURRENCY currency) throws IOException, InterruptedException {
         if (converter == null)
         {
@@ -58,8 +66,8 @@ public class TravelService
                 .build();
         log.info("\nTicket booked by : " + owner + ", num of seats booked : " + numSeatsBooked);
         ticketRepository.save(ticket);
-        travel.get().setNumseats(
-                travel.get().getNumseats() - numSeatsBooked
+        travel.get().bookSeats(
+                 numSeatsBooked
         );
         travelRepository.save(travel.get());
         return ticket;

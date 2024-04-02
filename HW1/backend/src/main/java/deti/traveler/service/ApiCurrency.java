@@ -55,8 +55,10 @@ public class ApiCurrency
         }
 
         int exitCode = process.waitFor();
-        log.error("\nExited with error code : " + exitCode);
 
+        if(exitCode != 0 ){
+            log.error("\nExited with error code : " + exitCode);
+        }
         JSONObject jsonResponse = new JSONObject(response.toString());
         JSONObject data = jsonResponse.getJSONObject("data");
         for (String currency : data.keySet()) {
