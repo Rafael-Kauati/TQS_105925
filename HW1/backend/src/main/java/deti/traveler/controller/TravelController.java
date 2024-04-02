@@ -29,7 +29,7 @@ public class TravelController {
     }
 
     @GetMapping("/purchase/{id}") // Corrected path variable declaration
-    public ResponseEntity<Ticket> purchaseTravel(@PathVariable Long id, String owner, int numSeatsBooked) {
+    public ResponseEntity<Ticket> purchaseTravel(@PathVariable Long id,@RequestParam("owner") String owner,@RequestParam("numSeatsBooked") int numSeatsBooked) {
         return new ResponseEntity<>(travelService.purchaseTicket(id, owner, numSeatsBooked), HttpStatus.CREATED);
     }
 }
