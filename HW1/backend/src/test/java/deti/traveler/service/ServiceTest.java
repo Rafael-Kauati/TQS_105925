@@ -46,7 +46,7 @@ class ServiceTest
     void testGetTravel() throws IOException, InterruptedException {
         List<Travel> result = travelService.getTravel(fromCity, toCity, departure, numSeats, CURRENCY.EUR);
 
-        verify(travelRepository).findByFromCityAndToCityAndDepartureAndNumSeatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats);
+        verify(travelRepository).findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats);
 
         assertEquals(expectedTravels, result);
     }
@@ -58,12 +58,12 @@ class ServiceTest
         LocalDateTime departureTime2 = LocalDateTime.of(2024, 3, 25, 10, 0);
         int numberOfSeats2 = 2;
 
-        when(travelRepository.findByFromCityAndToCityAndDepartureAndNumSeatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats))
+        when(travelRepository.findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats))
                 .thenThrow(new RuntimeException("Database connection failed"));
 
         List<Travel> result = travelService.getTravel(fromCity2, toCity2, departureTime2, numberOfSeats2, CURRENCY.EUR);
 
-        verify(travelRepository).findByFromCityAndToCityAndDepartureAndNumSeatsIsGreaterThanEqual(fromCity2, toCity2, departureTime2, numberOfSeats2);
+        verify(travelRepository).findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(fromCity2, toCity2, departureTime2, numberOfSeats2);
 
         assertTrue(result.isEmpty());
     }
@@ -72,7 +72,7 @@ class ServiceTest
     void setUp() {
         reset(travelRepository);
 
-        when(travelRepository.findByFromCityAndToCityAndDepartureAndNumSeatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats))
+        when(travelRepository.findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats))
                 .thenReturn(expectedTravels);
 
         expectedTravels.add(new Travel(1L, "CityA", "CityB", departure, null, 2, 100.0));

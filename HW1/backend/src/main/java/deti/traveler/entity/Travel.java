@@ -8,34 +8,31 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "Travel")
 @Table(name = "Travel")
 @Getter
 @Setter
-public class Travel
-{
+public class Travel {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
-    private String fromCity;
+    @Column(name = "fromcity")
+    private String fromcity;
 
-    @Column
-    private String toCity;
+    @Column(name = "tocity")
+    private String tocity;
 
-    @Column
+    @Column(name = "departure")
     private LocalDateTime departure;
 
-    @Column
+    @Column(name = "arrive")
     private LocalDateTime arrive;
 
-    @Column
+    @Column(name = "numseats")  // Remove the space here
+    private int numseats;
 
-    private int numSeats;
-    @Column
-
+    @Column(name = "price")
     private Double price;
-
 
 }

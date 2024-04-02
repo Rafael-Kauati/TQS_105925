@@ -36,7 +36,7 @@ class TicketServiceTest {
         LocalDateTime now = LocalDateTime.now();
         Travel travel = new Travel();
         travel.setId(travelId);
-        travel.setNumSeats(10); // Assuming there are 10 seats available
+        travel.setNumseats(10); // Assuming there are 10 seats available
         Optional<Travel> optionalTravel = Optional.of(travel);
 
         // Mock behavior
@@ -53,8 +53,10 @@ class TicketServiceTest {
 
         // Verify that save method is called on ticketRepository
         verify(ticketRepository, times(1)).save(purchasedTicket);
-
+        optionalTravel.get().setNumseats(
+                optionalTravel.get().getNumseats() - 1
+        );
         // Verify that updateTravelSeatsById method is called on travelRepository
-        verify(travelRepository, times(1)).updateTraveSeatslById(travelId,  1);
+        verify(travelRepository, times(1)).save(optionalTravel.get());
     }
 }

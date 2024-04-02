@@ -36,7 +36,7 @@ public class TravelService
             converter = new TTLCurrencyCache(new CurrencyConverter());
         }
         log.info("\nFetching a travel : "+ from+" -> "+to+", with atleast "+numSeats+" avaible | to pay in "+currency);
-        List<Travel> travelsFound =  travelRepository.findByFromCityAndToCityAndDepartureAndNumSeatsIsGreaterThanEqual(from, to, departure, numSeats);
+        List<Travel> travelsFound =  travelRepository.findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(from, to, departure, numSeats);
 
         if(!travelsFound.isEmpty()) {log.info("\nFound : \n"+travelsFound);}
 
@@ -58,7 +58,10 @@ public class TravelService
                 .build();
         log.info("\nTicket booked by : " + owner + ", num of seats booked : " + numSeatsBooked);
         ticketRepository.save(ticket);
-        travelRepository.updateTraveSeatslById(id, numSeatsBooked); // Corrected method name
+        travel.get().setNumseats(
+                travel.get().getNumseats() - numSeatsBooked
+        );
+        travelRepository.save(travel.get());
         return ticket;
     }
 

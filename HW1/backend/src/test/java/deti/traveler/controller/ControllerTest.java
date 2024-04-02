@@ -54,7 +54,7 @@ class ControllerTest
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        String travelModelJson = objectMapper.writeValueAsString(new TravelModel(DummyTravel.getFromCity(), DummyTravel.getToCity(), DummyTravel.getPrice(), DummyTravel.getDeparture(), DummyTravel.getNumSeats()));
+        String travelModelJson = objectMapper.writeValueAsString(new TravelModel(DummyTravel.getFromcity(), DummyTravel.getTocity(), DummyTravel.getPrice(), DummyTravel.getDeparture(), DummyTravel.getNumseats()));
 
         mockController.perform(get("/cities/EUR")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -72,10 +72,10 @@ class ControllerTest
         trips.add(DummyTravel);
 
         when(service.getTravel(
-                eq(DummyTravel.getFromCity()),
-                eq(DummyTravel.getToCity()),
+                eq(DummyTravel.getFromcity()),
+                eq(DummyTravel.getTocity()),
                 any(LocalDateTime.class),
-                eq(DummyTravel.getNumSeats()),
+                eq(DummyTravel.getNumseats()),
                 eq(CURRENCY.EUR)
         )).thenReturn(trips);
     }
