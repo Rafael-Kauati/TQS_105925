@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class TravelerApplication implements CommandLineRunner {
 
 	@Autowired
-	private final SetupH2DatabaseContent setupH2DatabaseContent;
+	private final SetupDatabaseContent setupH2DatabaseContent;
 
 		public static void main(String[] args) {SpringApplication.run(TravelerApplication.class, args);}
 
