@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "Travel")
+@Entity
 @Table(name = "Travel")
 @Getter
 @Setter
@@ -24,18 +25,16 @@ public class Travel {
     private String tocity;
 
     @Column(name = "departure")
-    private LocalDateTime departure;
+    private LocalDate departure;
 
     @Column(name = "arrive")
-    private LocalDateTime arrive;
+    private LocalDate arrive;
 
-    @Column(name = "numseats")  // Remove the space here
+    @Column(name = "numseats")
     private int numseats;
 
     @Column(name = "price")
     private Double price;
-
-
 
     public void bookSeats(final int numSeatsBooked)
     {

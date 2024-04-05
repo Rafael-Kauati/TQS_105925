@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.io.Serial;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -12,8 +13,7 @@ import java.time.LocalDateTime;
 public class TravelModel
 {
     private final String fromCity, toCity;
-    private final double price;
-    private final LocalDateTime departure;
+    private final LocalDate departure;
     private final int numSeats;
 
 }

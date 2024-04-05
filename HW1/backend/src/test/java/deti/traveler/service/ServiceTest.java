@@ -15,6 +15,7 @@ import org.mockito.quality.Strictness;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +36,7 @@ class ServiceTest
     private TravelService travelService;
     String fromCity = "CityA";
     String toCity = "CityB";
-    LocalDateTime departure = LocalDateTime.of(2024, 3, 25, 10, 0);
+    LocalDate departure = LocalDate.of(2024, 3, 25);
     int numSeats = 2;
 
 
@@ -55,7 +56,7 @@ class ServiceTest
     void testGetTravel_Failure() throws IOException, InterruptedException {
         String fromCity2 = "CityX";
         String toCity2 = "CityY";
-        LocalDateTime departureTime2 = LocalDateTime.of(2024, 3, 25, 10, 0);
+        LocalDate departureTime2 = LocalDate.of(2024, 3, 25);
         int numberOfSeats2 = 2;
 
         when(travelRepository.findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(fromCity, toCity, departure, numSeats))

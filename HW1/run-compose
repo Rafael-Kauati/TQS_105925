@@ -1,0 +1,37 @@
+sudo docker-compose down
+
+
+cd  backend/
+
+pwd
+
+mvn clean
+
+mvn install 
+
+
+
+echo -e "\n  ================================================================== "
+echo -e "    ================================================================== \n"
+
+echo -e "\n  Composing everything at:  \n"
+
+docker images
+
+echo -e "\n  =================================================================="
+
+docker ps
+
+
+pwd
+
+sudo docker-compose build
+docker images
+docker ps
+sudo docker-compose up
+docker images
+docker ps
+
+
+echo -e "\n  ================================================================== \n"
+echo -e "\n  Jā matane~ \n"

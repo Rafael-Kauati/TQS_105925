@@ -24,6 +24,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ class ControllerTest
     @MockBean
     private TravelService service;
 
-    private final Travel DummyTravel = new Travel(1L, "Dublin, Ireland","Galway, Ireland",LocalDateTime.now(),  LocalDateTime.now(), 6, 11.99);
+    private final Travel DummyTravel = new Travel(1L, "Dublin, Ireland","Galway, Ireland",LocalDate.now(),  LocalDate.now(), 6, 11.99);
 
     private final Ticket DummyTicket = Ticket.builder()
             .owner("James Lee")
@@ -56,18 +57,22 @@ class ControllerTest
 
 
     @Test
-    void TestSearchByGivenCities() throws Exception {
-
+    void testSearchByGivenCities() throws Exception {
+        // Create a travel model JSON string
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        String travelModelJson = objectMapper.writeValueAsString(new TravelModel(DummyTravel.getFromcity(), DummyTravel.getTocity(), DummyTravel.getPrice(), DummyTravel.getDeparture(), DummyTravel.getNumseats()));
+        String travelModelJson = objectMapper.writeValueAsString(new TravelModel("Dublin, Ireland", "Galway, Ireland", LocalDate.now(), 6));
 
+        // Perform the GET request to the controller method
         mockController.perform(get("/cities/EUR")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(travelModelJson)
+                        .param("fromCity", "Dublin, Ireland")
+                        .param("toCity", "Galway, Ireland")
+                        .param("departure", LocalDate.now().toString())
+                        .param("numSeats", "6")
                 )
-                .andDo(print())
-                .andExpect(status().isFound());
+                .andDo(print()) // Print the response for debugging if needed
+                .andExpect(status().isFound()); // Expecting a 302 Found status
     }
 
 
@@ -101,7 +106,7 @@ class ControllerTest
         when(service.getTravel(
                 eq(DummyTravel.getFromcity()),
                 eq(DummyTravel.getTocity()),
-                any(LocalDateTime.class),
+                any(LocalDate.class),
                 eq(DummyTravel.getNumseats()),
                 eq(CURRENCY.EUR)
         )).thenReturn(trips);

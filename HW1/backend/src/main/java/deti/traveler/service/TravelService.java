@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class TravelService
     }
 
 
-    public List<Travel> getTravel(final String from, final String to, final LocalDateTime departure, final int numSeats, CURRENCY currency) throws IOException, InterruptedException {
+    public List<Travel> getTravel(final String from, final String to, final LocalDate departure, final int numSeats, CURRENCY currency) throws IOException, InterruptedException {
         if (converter == null)
         {
             converter = new TTLCurrencyCache(new CurrencyConverter());

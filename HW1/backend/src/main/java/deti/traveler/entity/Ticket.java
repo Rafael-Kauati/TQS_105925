@@ -20,10 +20,13 @@ public class Ticket
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "purchasedAt")
     private LocalDateTime purchasedAt;
 
+    @Column(name = "owner")
     private String owner;
 
-    @Transient
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "travel_id")
     private Travel travel;
 }
