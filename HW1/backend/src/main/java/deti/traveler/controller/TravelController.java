@@ -36,7 +36,7 @@ public class TravelController {
             @PathVariable CURRENCY currency) throws IOException, InterruptedException {
 
         final List<Travel> result = travelService.getTravel(fromCity, toCity, departure, numSeats, currency);
-        return !result.isEmpty() ? new ResponseEntity<>(result, HttpStatus.FOUND) : new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+        return !result.isEmpty() ? new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/purchase/{id}")

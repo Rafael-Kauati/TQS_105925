@@ -48,6 +48,9 @@ public class TravelService
         List<Travel> travelsFound =  travelRepository.findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(from, to, departure, numSeats);
 
         if(!travelsFound.isEmpty()) {log.info("\nFound : \n"+travelsFound);}
+        else {
+            log.error("\nNot Found !!!");
+        }
 
         for(Travel t : travelsFound)
         {

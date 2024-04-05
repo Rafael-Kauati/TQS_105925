@@ -72,7 +72,7 @@ class ControllerTest
                         .param("numSeats", "6")
                 )
                 .andDo(print()) // Print the response for debugging if needed
-                .andExpect(status().isFound()); // Expecting a 302 Found status
+                .andExpect(status().isOk()); // Expecting a 302 Found status
     }
 
 

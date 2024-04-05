@@ -40,3 +40,55 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.travel-list {
+  width: 80%;
+  margin-top: 20px;
+}
+
+.travel-item {
+  background-color: #0a0909;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.travel-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.from-to {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.date {
+  margin-bottom: 5px;
+}
+
+.seats,
+.price {
+  margin-bottom: 5px;
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 20px;
+  font-style: italic;
+  color: #888;
+}
+
+
+.buttonItem{
+  background-color: #9e8a8a;
+}
