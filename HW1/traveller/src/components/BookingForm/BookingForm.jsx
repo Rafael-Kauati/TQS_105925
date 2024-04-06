@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Select from "react-select";
-const BookingForm = ({ searchCallback }) => {
+const BookingForm = ({ searchCallback }, {setCurrencyOpt}) => {
   const [departureCity, setDepartureCity] = useState('CityA');
   const [destinationCity, setDestinationCity] = useState('CityB');
   const [departureDate, setDepartureDate] = useState(new Date);
@@ -17,6 +17,7 @@ const BookingForm = ({ searchCallback }) => {
     const response = await axios.get(apiUrl);
 
     searchCallback(response.data)
+    setCurrencyOpt(currency.value)
   };
 
   const currency_options = [
