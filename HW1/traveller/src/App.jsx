@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import BookingForm from './components/BookingForm/BookingForm';
 import axios from 'axios';
 
 function App() {
   const [searchData, setSearchData] = useState([]);
-  const [currencyOpt, setCurrencyOpt] = useState("");
+  const [currencyOpt, setCurrencyOpt] = useState(null);
   const [selectedTravel, setSelectedTravel] = useState(null); // To store the selected travel item
   const [numSeatsToPurchase, setNumSeatsToPurchase] = useState(1); // To store the number of seats to purchase
+  const [tickets, setTickets] = useState([]); // To store the ticket data
+
+  useEffect(() => {
+    // Fetch tickets when the component mounts
+    fetchTickets();
+  }, []);
+
+  const fetchTickets = () => {
+    // Fetch tickets from the endpoint
+    axios.get(`http://localhost:9090/tickets/JamesLee`)
+      .then(response => {
+        setTickets(response.data);
+        console.log(tickets)
+      })
+      .catch(error => {
+        console.error('Error fetching tickets:', error);
+      });
+  };
 
   const SearchTravelHandler = (data) => {
     setSearchData(data);
@@ -34,6 +52,8 @@ function App() {
     axios.get(apiPurchaseUrl)
       .then(response => {
         console.log(response.data);
+        // After purchasing, fetch updated tickets
+        fetchTickets();
       })
       .catch(error => {
         console.error('Error purchasing ticket:', error);
@@ -74,7 +94,7 @@ function App() {
           <p>Departure : {selectedTravel.departure}</p>
           <p>Arrival : {selectedTravel.arrive}</p>
           <p>Seats availables: {selectedTravel.numseats}</p>
-          <p>Price: ${selectedTravel.price.toFixed(2)}</p>
+          <p>Price: ${selectedTravel.price.toFixed(2)} ${currencyOpt}</p>
           <label htmlFor="numSeats">Number of Seats to Purchase:</label>
           <input
             type="number"
@@ -89,6 +109,40 @@ function App() {
           <button onClick={() => setSelectedTravel(null)}>Close</button>
         </div>
       )}
+      {/* Table for tickets */}
+      <div className="ticket-list">
+        <h2>Tickets</h2>
+        {tickets.length === 0 ? (
+          <p>No tickets available.</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>From City</th>
+                <th>To City</th>
+                <th>Departure Date</th>
+                <th>Arrival Date</th>
+                <th>Number of Seats</th>
+                <th>Price </th>
+              </tr>
+            </thead>
+            <tbody>
+              {tickets.map(ticket => (
+                <tr key={ticket.id}>
+                  <td>{ticket.id}</td>
+                  <td>{ticket.fromCity}</td>
+                  <td>{ticket.toCity}</td>
+                  <td>{ticket.departure}</td>
+                  <td>{ticket.arrive}</td>
+                  <td>{ticket.numOfSeats}</td>
+                  <td>${ticket.price.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }

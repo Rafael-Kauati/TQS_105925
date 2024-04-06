@@ -82,7 +82,7 @@ public class TravelService
 
     public List<TravelTicketDTO> retrieveTickets(final String owner)
     {
-        final List<TravelTicketDTO> result = ticketRepository.findTicketsWithTravelInfoByOwner(owner);
+        final List<TravelTicketDTO> result = ticketRepository.findTicketDetails(owner);
 
         if(result.isEmpty())
         {
