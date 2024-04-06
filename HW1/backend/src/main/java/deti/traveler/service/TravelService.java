@@ -3,6 +3,7 @@ package deti.traveler.service;
 import deti.traveler.cache.TTLCurrencyCache;
 import deti.traveler.entity.Ticket;
 import deti.traveler.entity.Travel;
+import deti.traveler.entity.TravelTicketDTO;
 import deti.traveler.repository.TicketRepository;
 import deti.traveler.repository.TravelRepository;
 import deti.traveler.service.utils.CURRENCY;
@@ -66,6 +67,7 @@ public class TravelService
         final Ticket ticket = new Ticket().builder()
                 .purchasedAt(LocalDateTime.now())
                 .travel(travel.get())
+                .numOfSeats(numSeatsBooked)
                 .owner(owner)
                 .build();
         log.info("\nTicket booked by : " + owner + ", num of seats booked : " + numSeatsBooked);
@@ -76,5 +78,23 @@ public class TravelService
         travelRepository.save(travel.get());
         return ticket;
     }
+
+
+    public List<TravelTicketDTO> retrieveTickets(final String owner)
+    {
+        final List<TravelTicketDTO> result = ticketRepository.findTicketsWithTravelInfoByOwner(owner);
+
+        if(result.isEmpty())
+        {
+            log.warn("No tickets found for passager : "+owner);
+        }
+        else{
+            log.info("Tickets found for passager "+owner+" :\n"+result);
+        }
+
+        return result;
+    }
+
+
 
 }

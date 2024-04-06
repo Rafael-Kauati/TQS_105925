@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "Ticket")
-public class Ticket
-{
+public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +24,9 @@ public class Ticket
 
     @Column(name = "owner")
     private String owner;
+
+    @Column(name = "numOfSeats")  // corrected field name
+    private int numOfSeats;  // corrected field name
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_id")

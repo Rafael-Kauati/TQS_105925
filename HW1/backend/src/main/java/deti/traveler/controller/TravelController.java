@@ -3,6 +3,7 @@ package deti.traveler.controller;
 import deti.traveler.entity.Model.TravelModel;
 import deti.traveler.entity.Ticket;
 import deti.traveler.entity.Travel;
+import deti.traveler.entity.TravelTicketDTO;
 import deti.traveler.service.TicketService;
 import deti.traveler.service.TravelService;
 import deti.traveler.service.utils.CURRENCY;
@@ -23,7 +24,7 @@ import java.util.List;
 @RequestMapping
 public class TravelController {
     @Autowired
-    private  TravelService travelService;
+    private  TravelService service;
 
 
     //Option deixar de usar rquest body e usar apenas RquestParam
@@ -35,12 +36,17 @@ public class TravelController {
             @RequestParam("numSeats") int numSeats,
             @PathVariable CURRENCY currency) throws IOException, InterruptedException {
 
-        final List<Travel> result = travelService.getTravel(fromCity, toCity, departure, numSeats, currency);
+        final List<Travel> result = service.getTravel(fromCity, toCity, departure, numSeats, currency);
         return !result.isEmpty() ? new ResponseEntity<>(result, HttpStatus.OK) : new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/purchase/{id}")
     public ResponseEntity<Ticket> purchaseTravel(@PathVariable Long id,@RequestParam("owner") String owner,@RequestParam("numSeatsBooked") int numSeatsBooked) {
-        return new ResponseEntity<>(travelService.purchaseTicket(id, owner, numSeatsBooked), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.purchaseTicket(id, owner, numSeatsBooked), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/tickets/{owner}")
+    public ResponseEntity<List<TravelTicketDTO>> getTicketsByOwner(@PathVariable String owner){
+        return new ResponseEntity<>(service.retrieveTickets(owner), HttpStatus.OK);
     }
 }
