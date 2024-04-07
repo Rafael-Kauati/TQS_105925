@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Select from "react-select";
 const BookingForm = ({ searchCallback, currencyCallback}) => {
-  const [departureCity, setDepartureCity] = useState('CityA');
-  const [destinationCity, setDestinationCity] = useState('CityB');
+  const [departureCity, setDepartureCity] = useState('');
+  const [destinationCity, setDestinationCity] = useState('');
   const [departureDate, setDepartureDate] = useState(new Date);
   const [currency, setCurrency] = useState(null)
   //new Date().setFullYear(2024,03,25)
-  const [numSeats, setNumSeats] = useState(2);
+  const [numSeats, setNumSeats] = useState(1);
 
 
   const handleSubmit = async (e) => {
@@ -71,7 +72,7 @@ const BookingForm = ({ searchCallback, currencyCallback}) => {
       </label>
 
       <label>
-      <Select
+      <Select id='currencySelector'
         defaultValue={currency}
         onChange={setCurrency}
         options={currency_options}
@@ -81,6 +82,11 @@ const BookingForm = ({ searchCallback, currencyCallback}) => {
       <button type="submit">Search</button>
     </form>
   );
+};
+
+BookingForm.propTypes = {
+  searchCallback: PropTypes.func.isRequired,
+  currencyCallback: PropTypes.func.isRequired
 };
 
 export default BookingForm;

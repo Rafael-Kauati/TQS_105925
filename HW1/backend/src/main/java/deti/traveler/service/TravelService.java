@@ -44,6 +44,7 @@ public class TravelService
         if (converter == null)
         {
             converter = new TTLCurrencyCache(new CurrencyConverter());
+            converter.setTTL(40000);
         }
         log.info("\nFetching a travel : "+ from+" -> "+to+", with atleast "+numSeats+" avaible | to pay in "+currency);
         List<Travel> travelsFound =  travelRepository.findByFromcityAndTocityAndDepartureAndNumseatsIsGreaterThanEqual(from, to, departure, numSeats);

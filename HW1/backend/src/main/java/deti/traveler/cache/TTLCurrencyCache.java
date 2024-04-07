@@ -2,6 +2,7 @@ package deti.traveler.cache;
 
 import deti.traveler.service.utils.CURRENCY;
 import deti.traveler.service.utils.CurrencyConverter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +10,14 @@ import java.io.IOException;
 
 @Slf4j
 @Service
+@Setter
 public class TTLCurrencyCache {
-    private final int TTL = 5000;
 
     private CurrencyConverter converter;
     private long lastUpdateTime;
+
+    private  int TTL;
+
 
     public TTLCurrencyCache(CurrencyConverter converter) {
         this.converter = converter;

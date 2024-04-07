@@ -1,23 +1,17 @@
 package deti.traveler.controller;
 
-import deti.traveler.entity.Model.TravelModel;
 import deti.traveler.entity.Ticket;
 import deti.traveler.entity.Travel;
 import deti.traveler.entity.TravelTicketDTO;
-import deti.traveler.service.TicketService;
 import deti.traveler.service.TravelService;
 import deti.traveler.service.utils.CURRENCY;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
