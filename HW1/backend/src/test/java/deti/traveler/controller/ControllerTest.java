@@ -82,6 +82,7 @@ class ControllerTest
         assertTrue(content.contains("Dublin, Ireland"));
         assertTrue(content.contains("Galway, Ireland"));
     }
+
     @Test
     void testGetTravelsBetweenCitiesNotFound() throws Exception {
 
@@ -108,15 +109,15 @@ class ControllerTest
         //'http://localhost:9090/purchase/1?owner=JohnDoe&numSeatsBooked=2'
 
         MvcResult result = mockController.perform(get("/purchase/1")
-                        .param("owner", "JohnDoe")
+                        .param("owner", "James Lee")
                         .param("numSeatsBooked", "2")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andReturn();
 
         int statusCode = result.getResponse().getStatus();
-        assertEquals(201, statusCode);
+        assertEquals(200, statusCode);
     }
 
     @Test
@@ -137,8 +138,6 @@ class ControllerTest
         assertTrue(content.contains("\"numOfSeats\":2"));
         assertTrue(content.contains("\"ticketId\":2"));
     }
-
-
 
 
     @BeforeEach

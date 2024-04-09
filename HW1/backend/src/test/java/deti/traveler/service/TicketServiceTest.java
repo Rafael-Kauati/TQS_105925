@@ -16,6 +16,7 @@ import deti.traveler.entity.TravelTicketDTO;
 import deti.traveler.repository.TicketRepository;
 import deti.traveler.repository.TravelRepository;
 import deti.traveler.service.utils.CURRENCY;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -97,4 +98,29 @@ class TicketServiceTest {
         verify(ticketRepository).findTicketDetails(ownerCaptor.capture());
         assertEquals(owner, ownerCaptor.getValue());
     }
+
+
+    @Test
+    void testPurchaseTicketWhenTravelNotFound() {
+        Long nonExistentTravelId = 2L;
+        String owner = "John Doe";
+
+        Ticket purchasedTicket = ticketService.purchaseTicket(nonExistentTravelId, owner, 1);
+
+        assertNull(purchasedTicket);
+    }
+
+    @BeforeEach
+    void setup() {
+        Long nonExistentTravelId = 2L;
+        String owner = "John Doe";
+        Optional<Travel> optionalTravel = Optional.empty();
+
+        when(travelRepository.findById(nonExistentTravelId)).thenReturn(optionalTravel);
+
+
+
+
+    }
+
 }

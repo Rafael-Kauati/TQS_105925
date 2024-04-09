@@ -64,6 +64,9 @@ public class TravelService
 
     public Ticket purchaseTicket(final Long id, String owner, int numSeatsBooked) {
         final Optional<Travel> travel = travelRepository.findById(id);
+        if (!travel.isPresent()) {
+            return null;
+        }
         log.info("\nTravel fetched : " + travel.get().toString() + " with id : " + id);
         final Ticket ticket = new Ticket().builder()
                 .purchasedAt(LocalDateTime.now())

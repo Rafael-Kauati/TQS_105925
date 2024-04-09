@@ -36,7 +36,10 @@ public class TravelController {
 
     @GetMapping("/purchase/{id}")
     public ResponseEntity<Ticket> purchaseTravel(@PathVariable Long id,@RequestParam("owner") String owner,@RequestParam("numSeatsBooked") int numSeatsBooked) {
-        return new ResponseEntity<>(service.purchaseTicket(id, owner, numSeatsBooked), HttpStatus.CREATED);
+        //return new ResponseEntity<>(service.purchaseTicket(id, owner, numSeatsBooked), HttpStatus.CREATED);
+        final Ticket ticket = service.purchaseTicket(id, owner, numSeatsBooked);
+        return ticket  != null ? new ResponseEntity<>(ticket, HttpStatus.OK) : new ResponseEntity<>(ticket, HttpStatus.NOT_FOUND);
+
     }
 
     @GetMapping("/tickets/{owner}")

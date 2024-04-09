@@ -57,6 +57,13 @@ public class SetupDatabaseContent
             service.addTravel(t5);
         }
 
+        Travel t6 = new Travel(null, "Aveiro, Aveiro", "Albergaria das Cabras, Arouca", LocalDate.of(2024, 5, 20),
+                LocalDate.of(2024, 5,21), 40, 14.0);
+        if (service.getTravel(t6.getFromcity(), t6.getTocity(), t6.getDeparture(), t6.getNumseats(), CURRENCY.EUR).isEmpty()) {
+            log.info(String.valueOf(t6));
+            service.addTravel(t6);
+        }
+
     }
 
 
