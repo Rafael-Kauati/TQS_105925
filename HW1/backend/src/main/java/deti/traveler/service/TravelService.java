@@ -81,8 +81,12 @@ public class TravelService
     }
 
 
-    public List<TravelTicketDTO> retrieveTickets(final String owner)
-    {
+    public List<TravelTicketDTO> retrieveTickets(final String owner, final CURRENCY currency) throws IOException, InterruptedException {
+        if (converter == null)
+        {
+            converter = new TTLCurrencyCache(new CurrencyConverter());
+            converter.setTTL(40000);
+        }
         final List<TravelTicketDTO> result = ticketRepository.findTicketDetails(owner);
 
         if(result.isEmpty())
@@ -91,6 +95,10 @@ public class TravelService
         }
         else{
             log.info("Tickets found for passager "+owner+" :\n"+result);
+            for (TravelTicketDTO t : result) {
+                    t.setPrice(converter.convertValue(currency, t.getPrice()));
+            }
+
         }
 
         return result;

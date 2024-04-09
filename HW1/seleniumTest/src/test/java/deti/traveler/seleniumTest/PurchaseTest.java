@@ -83,7 +83,7 @@ class PurchaseTest {
             numSeatsField.sendKeys("3");
 
             // Click on a button
-            driver.findElement(By.cssSelector(".buttonItem:nth-child(10)")).click();
+            driver.findElement(By.cssSelector(".buttonItem:nth-child(11)")).click();
 
             WebElement fromCityLabel = driver.findElement(By.cssSelector("tr:last-child > td:nth-child(2)"));
             WebElement toCityLabel = driver.findElement(By.cssSelector("tr:last-child > td:nth-child(3)"));
@@ -92,10 +92,8 @@ class PurchaseTest {
             assertEquals("Aveiro",fromCityLabel.getText(), "The last purchase's from city should be Aveiro" );
             assertEquals("Paris",toCityLabel.getText(), "The last purchase's to city should be Paris" );
             assertEquals("3",numSeatsSelected.getText(), "The last purchase's number of seats purchased should be 2" );
-            // Perform assertions or further actions as needed
 
         } finally {
-            // Close the browser window
             driver.quit();
         }
     }

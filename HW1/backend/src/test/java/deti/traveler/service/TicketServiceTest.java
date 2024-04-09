@@ -3,6 +3,7 @@ package deti.traveler.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import deti.traveler.entity.Travel;
 import deti.traveler.entity.TravelTicketDTO;
 import deti.traveler.repository.TicketRepository;
 import deti.traveler.repository.TravelRepository;
+import deti.traveler.service.utils.CURRENCY;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -43,10 +45,9 @@ class TicketServiceTest {
         // Mock data
         Long travelId = 1L;
         String owner = "John Doe";
-        LocalDateTime now = LocalDateTime.now();
         Travel travel = new Travel();
         travel.setId(travelId);
-        travel.setNumseats(10); // Assuming there are 10 seats available
+        travel.setNumseats(10);
         Optional<Travel> optionalTravel = Optional.of(travel);
 
         // Mock behavior
@@ -70,14 +71,22 @@ class TicketServiceTest {
 
 
     @Test
-    void testRetrieveTickets() {
+    void testRetrieveTickets() throws IOException, InterruptedException {
         String owner = "John Doe";
         List<TravelTicketDTO> expectedTickets = new ArrayList<>();
-        TravelTicketDTO ticket1 = new TravelTicketDTO(1L, owner, LocalDateTime.now(), 1L, 2, LocalDate.now(), LocalDate.now(), "CityA", 100.0, "CityB");        expectedTickets.add(ticket1);
+
+        TravelTicketDTO ticket1 = TravelTicketDTO.builder()
+                .price(100.0).toCity("CityB").fromCity("CityA")
+                .arrive( LocalDate.now()).departure( LocalDate.now()).ticketId(1L)
+                .owner("James Lee")
+                .travelId(1L).numOfSeats(2).purchasedAt(LocalDateTime.now())
+                .build();
+
+        expectedTickets.add(ticket1);
 
         when(ticketRepository.findTicketDetails(owner)).thenReturn(expectedTickets);
 
-        List<TravelTicketDTO> actualTickets = ticketService.retrieveTickets(owner);
+        List<TravelTicketDTO> actualTickets = ticketService.retrieveTickets(owner, CURRENCY.EUR);
 
         assertNotNull(actualTickets);
         assertEquals(expectedTickets.size(), actualTickets.size());

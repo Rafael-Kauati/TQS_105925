@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SeleniumJupiter.class)
 @SpringBootTest
-class SeleniumTest {
+class CurrencySelectionTest {
 
     private WebDriver driver;
 
@@ -61,11 +61,13 @@ class SeleniumTest {
             driver.findElement(By.cssSelector("button")).click();
 
             // Wait for elements to load
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-            WebElement priceElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".travel-item:nth-child(1) .price")));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            WebElement currencyShow = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("selectedCurrencyShow")));
+
+            System.out.println("/n Currency choose : " + currencyShow.getText());
 
             // Asserting text using JUnit assertions
-            assertEquals("Price: $11.87 GBP", priceElement.getText(), "Price text does not match");
+            assertEquals("GBP", currencyShow.getText(), "Currency text does not match");
 
 
     }
