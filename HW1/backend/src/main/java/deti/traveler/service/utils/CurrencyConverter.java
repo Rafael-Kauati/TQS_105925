@@ -1,6 +1,7 @@
 package deti.traveler.service.utils;
 
 import deti.traveler.service.ApiCurrency;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ public class CurrencyConverter
 {
     private final ApiCurrency currency;
 
+    @Getter
     private Map<String, Double> currencyValues;
 
     public double convert(CURRENCY currencyOpt, double toBeConverted)

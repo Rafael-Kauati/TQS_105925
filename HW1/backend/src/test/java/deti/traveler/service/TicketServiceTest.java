@@ -110,17 +110,6 @@ class TicketServiceTest {
         assertNull(purchasedTicket);
     }
 
-    @BeforeEach
-    void setup() {
-        Long nonExistentTravelId = 2L;
-        String owner = "John Doe";
-        Optional<Travel> optionalTravel = Optional.empty();
 
-        when(travelRepository.findById(nonExistentTravelId)).thenReturn(optionalTravel);
-
-
-
-
-    }
 
 }
